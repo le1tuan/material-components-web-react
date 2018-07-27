@@ -26,15 +26,16 @@ export default class ChipSet extends Component {
     return this.state.selectedChipIds && this.state.selectedChipIds.has(id);
   }
 
-  handleChoiceSelect = (id) => {
-    if (this.isSelected(id)) {
-      this.setState({selectedChipIds: new Set([-1])});
-    } else {
-      this.setState({selectedChipIds: new Set([id])});
+  selectChoiceChip = (id) => {
+    const selectedChipIds = new Set();
+    if (!this.isSelected(id)) {
+      selectedChipIds.add(id);
     }
+    this.setState({selectedChipIds});
+    this.props.handleSelect(selectedChipIds);
   }
 
-  handleFilterSelect = (id) => {
+  selectFilterChip = (id) => {
     const selectedChipIds = new Set(this.state.selectedChipIds);
     if (this.isSelected(id)) {
       selectedChipIds.delete(id);
@@ -42,6 +43,7 @@ export default class ChipSet extends Component {
       selectedChipIds.add(id);
     }
     this.setState({selectedChipIds});
+    this.props.handleSelect(selectedChipIds);
   }
 
   setCheckmarkWidth = (checkmark) => {
@@ -63,7 +65,7 @@ export default class ChipSet extends Component {
         selected={this.isSelected(chip.props.id)}
         chipCheckmark={this.props.filter ? <ChipCheckmark ref={this.setCheckmarkWidth}/> : null}
         computeBoundingRect={this.props.filter ? this.computeBoundingRect : null}
-        handleSelect={this.props.filter ? this.handleFilterSelect : this.handleChoiceSelect}
+        handleSelect={this.props.filter ? this.selectFilterChip : this.selectChoiceChip}
         {...chip.props} />
     );
   }

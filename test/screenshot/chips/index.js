@@ -6,12 +6,16 @@ import {Chip, ChipSet} from '../../../packages/chips';
 
 class ShirtSizes extends React.Component {
   state = {
-    selectedChipId: 1,
+    selectedChipIds: new Set([1]),
+  }
+
+  handleSelect = (selectedChipIds) => {
+    this.setState(selectedChipIds);
   }
 
   render() {
     return (
-      <ChipSet selectedChipIds={new Set([this.state.selectedChipId])} >
+      <ChipSet selectedChipIds={this.state.selectedChipIds} handleSelect={this.handleSelect} >
         <Chip id={0} label='Small' />
         <Chip id={1} label='Medium' />
         <Chip id={2} label='Large' />
@@ -25,9 +29,13 @@ class ShoppingFilters extends React.Component {
     selectedChipIds: new Set([0, 1]),
   };
 
+  handleSelect = (selectedChipIds) => {
+    this.setState(selectedChipIds);
+  }
+
   render() {
     return (
-      <ChipSet filter selectedChipIds={this.state.selectedChipIds}>
+      <ChipSet filter selectedChipIds={this.state.selectedChipIds} handleSelect={this.handleSelect}>
         <Chip id={0} label='Tops' />
         <Chip id={1} label='Bottoms' />
         <Chip id={2} label='Shoes' />
