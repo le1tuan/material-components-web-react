@@ -39,18 +39,16 @@ export default class ChipSet extends Component {
     return this.state.selectedChipIds && this.state.selectedChipIds.has(id);
   }
 
-  handleSelect = (chipFoundation) => {
+  handleSelect = (chipId) => {
     // We'll have to expose some MDCChipSetFoundation methods so we won't really have
     // to do this hack.
     const e = {
       detail: {
-        chip: {
-          foundation: chipFoundation,
-        }
+        chipId,
       }
     }
     this.foundation_.chipInteractionHandler_(e);
-    this.props.handleSelect(this.foundation_.selectedChips_);
+    this.props.handleSelect(this.foundation_.selectedChipIds_);
   }
 
   setCheckmarkWidth = (checkmark) => {
