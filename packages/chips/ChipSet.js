@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import {MDCChipSetFoundation} from '@material/chips';
 
 import ChipCheckmark from './ChipCheckmark';
 import Chip from './Chip';
@@ -11,9 +12,21 @@ export default class ChipSet extends Component {
     selectedChipIds: this.props.selectedChipIds,
   }
 
+  componentDidMount() {
+    this.foundation_ = new MDCChipSetFoundation(this.adapter);
+    this.foundation_.init();
+  }
+
+  componentWillUnmount() {
+    this.foundation_.destroy();
+  }
+
   get classes() {
-    const {className} = this.props;
-    return classnames('mdc-chip-set', className);
+    const {className, filter, choice} = this.props;
+    return classnames('mdc-chip-set', className, {
+      'mdc-chip-set--filter': filter,
+      'mdc-chip-set--choice': choice,
+    });
   }
 
   get adapter() {
@@ -26,24 +39,16 @@ export default class ChipSet extends Component {
     return this.state.selectedChipIds && this.state.selectedChipIds.has(id);
   }
 
-  selectChoiceChip = (id) => {
-    const selectedChipIds = new Set();
-    if (!this.isSelected(id)) {
-      selectedChipIds.add(id);
+  handleSelect = (chipFoundation) => {
+    const e = {
+      detail: {
+        chip: {
+          foundation: chipFoundation,
+        }
+      }
     }
-    this.setState({selectedChipIds});
-    this.props.handleSelect(selectedChipIds);
-  }
-
-  selectFilterChip = (id) => {
-    const selectedChipIds = new Set(this.state.selectedChipIds);
-    if (this.isSelected(id)) {
-      selectedChipIds.delete(id);
-    } else {
-      selectedChipIds.add(id);
-    }
-    this.setState({selectedChipIds});
-    this.props.handleSelect(selectedChipIds);
+    this.foundation_.chipInteractionHandler_(e);
+    this.props.handleSelect(this.foundation_.selectedChips_);
   }
 
   setCheckmarkWidth = (checkmark) => {
@@ -65,7 +70,7 @@ export default class ChipSet extends Component {
         selected={this.isSelected(chip.props.id)}
         chipCheckmark={this.props.filter ? <ChipCheckmark ref={this.setCheckmarkWidth}/> : null}
         computeBoundingRect={this.props.filter ? this.computeBoundingRect : null}
-        handleSelect={this.props.filter ? this.selectFilterChip : this.selectChoiceChip}
+        handleSelect={this.handleSelect}
         {...chip.props} />
     );
   }

@@ -10,12 +10,13 @@ class ShirtSizes extends React.Component {
   }
 
   handleSelect = (selectedChipIds) => {
+    console.log('choice', selectedChipIds);
     this.setState(selectedChipIds);
   }
 
   render() {
     return (
-      <ChipSet selectedChipIds={this.state.selectedChipIds} handleSelect={this.handleSelect} >
+      <ChipSet choice selectedChipIds={this.state.selectedChipIds} handleSelect={this.handleSelect} >
         <Chip id={0} label='Small' />
         <Chip id={1} label='Medium' />
         <Chip id={2} label='Large' />
@@ -30,6 +31,7 @@ class ShoppingFilters extends React.Component {
   };
 
   handleSelect = (selectedChipIds) => {
+    console.log('filter', selectedChipIds);
     this.setState(selectedChipIds);
   }
 
