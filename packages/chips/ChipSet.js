@@ -40,6 +40,8 @@ export default class ChipSet extends Component {
   }
 
   handleSelect = (chipFoundation) => {
+    // We'll have to expose some MDCChipSetFoundation methods so we won't really have
+    // to do this hack.
     const e = {
       detail: {
         chip: {
