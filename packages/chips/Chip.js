@@ -95,8 +95,6 @@ Chip.defaultProps = {
   id: -1,
   label: '',
   className: '',
-  selected: false,
-  handleSelect: () => {},
 };
 
 export default withRipple(Chip);
