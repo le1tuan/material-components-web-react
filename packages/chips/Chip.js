@@ -47,7 +47,7 @@ export class Chip extends Component {
     if (typeof this.props.onClick === 'function') {
       this.props.onClick(e);
     }
-    this.props.handleSelect(this.foundation_);
+    this.props.handleSelect(this.props.id);
   }
 
   render() {

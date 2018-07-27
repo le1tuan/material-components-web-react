@@ -10,7 +10,6 @@ class ShirtSizes extends React.Component {
   }
 
   handleSelect = (selectedChipIds) => {
-    console.log('choice', selectedChipIds);
     this.setState(selectedChipIds);
   }
 
@@ -31,7 +30,6 @@ class ShoppingFilters extends React.Component {
   };
 
   handleSelect = (selectedChipIds) => {
-    console.log('filter', selectedChipIds);
     this.setState(selectedChipIds);
   }
 

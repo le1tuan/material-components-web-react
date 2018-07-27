@@ -8,9 +8,6 @@ import Chip from './Chip';
 
 export default class ChipSet extends Component {
   checkmarkWidth_ = 0;
-  state = {
-    selectedChipIds: this.props.selectedChipIds,
-  }
 
   componentDidMount() {
     this.foundation_ = new MDCChipSetFoundation(this.adapter);
@@ -36,7 +33,7 @@ export default class ChipSet extends Component {
   }
 
   isSelected = (id) => {
-    return this.state.selectedChipIds && this.state.selectedChipIds.has(id);
+    return this.props.selectedChipIds && this.props.selectedChipIds.has(id);
   }
 
   handleSelect = (chipId) => {
